@@ -1,0 +1,406 @@
+\documentclass[a5paper, openany, twoside, 10pt]{memoir}
+
+\usepackage{array}
+\usepackage{babel}
+\usepackage{multicol}
+\usepackage{type1cm}
+\usepackage{lettrine}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\usepackage[lmargin=0.85in, rmargin=0.85in, tmargin=0.4in, bmargin=0.5in, includefoot, includehead]{geometry}
+\usepackage{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{eso-pic}
+\usepackage{mdframed}
+\usepackage{arev}
+\usepackage{longtable}
+\usepackage{arydshln}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pdfpages}
+\usepackage{ifthen}
+
+% This is the only package added just for the example project. You can remove
+% this.
+\usepackage{lipsum}
+
+% This sets where images can be imported from. If you're feeling more organised
+% than me you can set it to images, then store all your images in that directory.
+\graphicspath{ {.} }
+
+\title{Example Adventure}
+\author{Mike Knee}
+\date{September 2024}
+
+% This sets the font. There's some good documentation on setting custom fonts
+% https://www.overleaf.com/learn/latex/XeLaTeX
+% You can use a lot of Google's fonts without any additional configuration (e.g.
+% "Vollkorn" and "Raleway". I quite like Vollkorn.
+\setmainfont{Vollkorn}
+%\setmainfont{Raleway}
+
+% Check out this file for a lot of the preamble/setup
+\input{setup/predoc.tex}
+
+\begin{document}
+
+% Use this command to set a cover image from a PNG
+\fullpagetitlepicture{wf_cover}
+
+% Alternatively you could use the titlingpage environment:
+% \begin{titlingpage}
+% \begin{center}
+%     \thispagestyle{empty}
+%     \vspace*{2cm}
+%     \HUGE \textswab{EXAMPLE \\
+%     ADVENTURE}
+    
+%     \large A Lovely Subtitle
+    
+    
+%     \vfill
+%     % I'm not including the troika_long.png here, because it's Melsonia's
+%     % to distribute. You can get the Troika compatibility graphics from
+%     % https://melsonian-arts-council.itch.io/troika-numinous-edition
+%     % under the demo section.
+%     \includegraphics[width=5cm]{troika_long.png}
+
+%     \Large By Mike Knee
+
+% \end{center}
+% \end{titlingpage}
+% \pagebreak
+
+% The copyrightpage environment accepts an image to include as a small logo.
+% Upload your own logo or any small image you like to include on the "inside
+% cover".
+% You can also omit the logo argument completely.
+\begin{copyrightpage}{gr_logo_alt}
+
+Copyright 2024 Mike Knee \copyright
+
+This small example project demonstrates some of the setup/standard formats I use for formatting Troika! in \LaTeX.
+
+Typeset in Vollkorn and Nimbus Mono.
+
+This Example Adventure is an independent production by Mike Knee and is not affiliated with the Melsonian Arts Council.
+
+% This is an example of an external hyperlink.
+I like to mark references to spells and items from the core \bhref{https://www.troikarpg.com/}{Troika!} rules with a \corereference.
+
+\end{copyrightpage}
+
+% Table of Contents
+\tableofcontents
+
+% The main text begins here!
+\vfill
+\pagebreak
+% Most people don't like this! A lot of doc online says this is bad. I prefer it,
+% but you can change this to \frenchspacing or remove it completely.
+\sloppy
+
+% Set the page numbering back to 1 here, as this is where most books would start
+% counting numbers
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% I like an opening text block, I think it's fun. You can do this, or just remove
+% the whole vplace environment here.
+% lettrine is a nice extra, my recommendation is not to over-use it!
+\begin{vplace}
+\lettrine{L}{ettrine} \lipsum[1]
+\end{vplace}
+
+% You can include a separate PDF (or in this case actually a PNG as if it were a
+% PDF) with this command. The documentation can be found https://texdoc.org/serve/pdfpages.pdf/0
+% But the quick summary is:
+% `pages=-` means include all pages (and for a single png this is appropriate).
+% `addtotoc` is a little more complex, the 5 entries in the curly braces
+% correspond to:
+%  - The page number in the included PDF to add to the ToC. As the image is a
+%    single page, this should be 1.
+%  - The section level to add it to. We're using memoir, and we want the map to
+%    sit in the contents alongside "Introduction" etc. so this is chapter.
+%  - The depth of the section level specified above. chapter corresponds to 1
+%    (and section is 2, subsection 3, etc.).
+%  - The name of the entry in the ToC.
+%  - The label for the page, which can then be used in links.
+\includepdf[pages=-,addtotoc={1,chapter,1,Map,map}]{worm_finger_2_outlines_labels.png}
+
+\chapter{Introduction}
+
+\lipsum[1]
+
+\section{Section Heading}
+% labels allow you to link back to a position in the text. I tend to only add
+% these to sections I need to link to. Good practice is probably to add a label
+% to every heading. No-one's checking though.
+\label{section-section-heading}
+
+\emph{Section and subsection headings will appear in the ToC, subsubsections and lower will not.}
+\begin{itemize}
+    \item List item one
+    \item List item two
+    \item List item three
+        split over multiple lines.
+    \item List item four
+
+    This one has a linebreak in it.
+
+    \item[] You can also add items without bullets
+
+    \begin{itemize}
+        \item And nest lists.
+    \end{itemize}
+\end{itemize}
+
+\begin{enumerate}
+    \item You can have numbered lists
+    \item and those can also
+    \begin{enumerate}
+        \item Be nested
+        \begin{enumerate}
+            \item Like this!
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+% This is a good example where the page layout is a bit Latex-y. Without the
+% vfill and pagebreak, the lists above will get stretched out! It looks kind of
+% ugly, so we can force a pagebreak here to make it a bit nicer.
+\vfill
+\pagebreak
+
+\section{Second Introduction Heading}
+
+This one has some \textbf{subsections}.
+
+% bhyperref is a custom command, you can see details in the setup/predoc.tex
+% file. You could modify that command to restyle links.
+You can link back to sections using \bhyperref{section-section-heading}{bhyperref}.
+
+\subsection{Intro Subsection 1}
+
+\lipsum[2]
+
+\subsection{Intro Subsection 2}
+
+\lipsum[1]
+
+\subsubsection{Subsubsection}
+
+After subsubsection, the command changes to paragraph.
+
+\paragraph{Paragraph}
+
+This is paragraph content, paragraph headings are given inline.
+
+\begin{informational}
+
+The informational environment gives a kind "quote" type formatting. I often use it for notes that are specific GM-advice. You could use it for anything you wanted though.
+
+\lipsum[1]
+
+\end{informational}
+
+\section{Third Introduction Heading}
+
+This is an example of the nice2longtable environment. It works similarly to the normal table environment, but is designed for two columns only. I use it for most random tables.
+
+% The two numbers here specify the relative widths of each column. I don't have
+% great advice for setting these widths, just experiment with the two numbers if
+% you need to make the left-most column wider. They should both add up to ~0.95.
+\begin{nice2longtable}{0.05}{0.89}
+D6 & And the thing that happens:\\
+1 & Summon a Bonshad\corereference\\
+2 & Roll twice on the Oops! table and apply both results\\
+3 & Wizard steals your shoes\\
+4 & \LaTeX compilation failure\\
+5 & Bathed in dragonfire\\
+6 & Immediately cast Zed\corereference\\
+\end{nice2longtable}
+
+\chapter{Content Chapter}
+
+\section{This is a Section}
+
+\begin{tightcenter}
+The tightcenter environment centres text, but keeps paragraph spacing the same (which center does not). I don't really use it very often, but sometimes it's helpful.
+\end{tightcenter}
+
+\begin{center}
+This is the normal center environment. I use this for damage tables in bestiary entries.
+\end{center}
+
+\lipsum[1-5]
+
+\niceappendix
+
+% This command will ensure the following chaper heading goes onto a new
+% physical page in the ToC. It's sometimes useful to make the ToC a bit
+% more readable.
+\addtocontents{toc}{\protect\newpage}
+\chapter{Bestiary}
+
+% This is an example bestiary entry.
+\begin{multicols}{2}
+
+\section{Example Creature}
+\label{example-creature}
+
+\begin{itemize}
+    \item[] \emph{Skill} 8
+    \item[] \emph{Stamina} 18
+    \item[] \emph{Initiative} 5
+    \item[] \emph{Armour} 0
+    \item[] \emph{Damage} Large Beast
+\end{itemize}
+
+\begin{mientable}
+1 & Explanatory \\ \hline
+2 & Placeholding \\ \hline
+3 & Didactic \\ \hline
+4 & Verbose \\ \hline
+5 & Edifying \\ \hline
+6 & Obfuscating \\ \hline
+\end{mientable}
+
+\end{multicols}
+
+It chants, low and droning:
+
+\lipsum[1]
+
+\emph{Special:} The example creature can appear in any place the GM didn't prep but the party arrived at. Find it in place of the expected inhabitants.
+
+% I think it's important to make sure none of the bestiary entries cross a page
+% boundary. I'd recommend writing all your entries out, then editing and adding these
+% \vfill
+% \pagebreak
+% blocks until everything is laid out sensibly.
+\vfill
+\pagebreak
+
+\begin{multicols}{2}
+
+\section{Example Beast}
+\label{example-beast}
+
+\begin{itemize}
+    \item[] \emph{Skill} 8
+    \item[] \emph{Stamina} 23
+    \item[] \emph{Initiative} 2
+    \item[] \emph{Armour} 1
+    \item[] \emph{Damage} as Gigantic Beast
+\end{itemize}
+
+\begin{mientable}
+1 & Lumbering \\ \hline
+2 & Bellowing \\ \hline
+3 & Skulking \\ \hline
+4 & On the prowl \\ \hline
+5 & Morose \\ \hline
+6 & Bestial \\ \hline
+\end{mientable}
+
+\end{multicols}
+
+A larger beast than the \bhyperref{example-creature}{Example Creature}.
+
+\emph{Special:} The example beast can appear in any place the GM didn't prep but the party managed arrived at. Find it in place of the expected inhabitants.
+
+\begin{multicols}{2}
+
+\section{Example Critter}
+\label{example-critter}
+
+\begin{itemize}
+    \item[] \emph{Skill} 6
+    \item[] \emph{Stamina} 6
+    \item[] \emph{Initiative} 2
+    \item[] \emph{Armour} 0
+    \item[] \emph{Damage} as Special
+\end{itemize}
+
+\begin{mientable}
+1 & Furtive \\ \hline
+2 & Curious \\ \hline
+3 & Famished \\ \hline
+4 & Shy \\ \hline
+5 & Creeping \\ \hline
+6 & Poorly Rendered \\ \hline
+\end{mientable}
+
+\end{multicols}
+
+A smaller critter than the \bhyperref{example-creature}{Example Creature}.
+
+\emph{Special:} The example critter can appear in any place the GM didn't prep but the party arrived at. Find it in place of the expected inhabitants. It has a separate damage table:
+
+\emph{Special:} Damage:
+
+\begin{center}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|}
+        \hline
+        Roll & 1 & 2 & 3 & 4 & 5 & 6 & 7+ \\ \hline
+        Damage & 3 & 5 & 5 & 7 & 7 & 10* & 13* \\ \hline
+    \end{tabular}
+\end{center}
+
+*The example critter replaces one item held or carried in the targets inventory with a early testing or beta version of that item.
+
+\chapter{Spells}
+
+% I use the subsubsections for spells, as they don't appear in the ToC.
+\subsubsection{Exemplary (1)}
+\label{exemplary}
+
+Provide an instantly comprehensible example for any situation or concept that could reasonably be understood. All who watch your brief demonstration understand what you're describing to the same level you do.
+
+\chapter{Really Long Table}
+
+The nice2longtable can go over multiple pages, although I don't really recommend this unless there's no other good way to present the info.
+
+\begin{nice2longtable}{0.05}{0.89}
+d27 & Lipsum Sentence \\
+1 & \lipsum[1][1] \\
+2 & \lipsum[1][2] \\
+3 & \lipsum[1][3] \\
+4 & \lipsum[1][4] \\
+5 & \lipsum[1][5] \\
+6 & \lipsum[1][6] \\
+7 & \lipsum[1][7] \\
+8 & \lipsum[1][9] \\
+10 & \lipsum[1][10] \\
+11 & \lipsum[1][11] \\
+12 & \lipsum[1][12] \\
+13 & \lipsum[1][13] \\
+14 & \lipsum[1][14] \\
+15 & \lipsum[1][15] \\
+16 & \lipsum[1][16] \\
+17 & \lipsum[1][17] \\
+18 & \lipsum[1][18] \\
+19 & \lipsum[2][1] \\
+20 & \lipsum[2][2] \\
+21 & \lipsum[2][3] \\
+22 & \lipsum[2][4] \\
+23 & \lipsum[2][5] \\
+24 & \lipsum[2][6] \\
+25 & \lipsum[2][7] \\
+26 & \lipsum[2][8] \\
+27 & \lipsum[2][9] \\
+\end{nice2longtable}
+
+% This adds one final blank page, it's not necessary really, but I like having
+% it because I home-print a lot of stuff to staple together as saddle-bound
+% zines to use at the table.
+\clearpage
+\thispagestyle{empty}
+\null
+
+\end{document}

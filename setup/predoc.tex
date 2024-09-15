@@ -1,0 +1,224 @@
+\edef\hdrtitle{\thetitle}
+
+\pagestyle{fancy}
+\fancyhf{}
+% The fancyhead commands put things in the header. The square brackets is which
+% side and which pages (odd or even). So LO is left side of odd pages, and RE is
+% right side of even pages.
+% \fancyhead[LE,RO]{\hdrtitle}
+% \fancyhead[RE,LO]{\leftmark}
+\fancyhead[LO]{\hdrtitle}
+% This is the chapter title.
+\fancyhead[RE]{\leftmark}
+% Same for the footer, this puts the page number in the centre for Even and Odd
+% pages.
+\fancyfoot[CE,CO]{\thepage}
+
+% Override some settings for chapter pages - keep the header basically as-is but remove the \leftmark
+\fancypagestyle{chap-fancy}{%
+  \fancyhf{}
+  %\fancyhead[LE,RO]{\hdrtitle}
+  \fancyhead[LO]{\hdrtitle}
+  \fancyfoot[CE,CO]{\thepage}
+}
+\patchcmd{\chapter}{\thispagestyle{chapter}}{\thispagestyle{chap-fancy}}{}{}
+
+% This doesn't really impact anything, but you should include it because otherwise
+% overleaf's PDF viewer gets janky. I don't know why that's the case, just trust
+% me.
+\hypersetup{
+    colorlinks=false,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+\newcommand{\bhref}[2]{\href{#1}{\bfseries#2}}
+
+\newcommand{\bhyperref}[2]{\textbf{\hyperref[#1]{#2}}}
+
+\newcommand{\bpageref}[1]{\textbf{\hyperref[#1]{page \pageref{#1}}}}
+
+\newcommand{\corereference}{\textbf{\textsuperscript{T!}}}
+
+% This sets the width between paragraphs, and the indent for the first line
+\parskip=4pt
+\parindent=0pt
+
+% This sets the spacings around itemize lists and enumerated lists
+\setlist[itemize]{leftmargin=1.5em,itemsep=0pt,topsep=0pt,parsep=4pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=0pt,topsep=0pt,parsep=4pt}
+
+% center environment, with smaller parskips and separators
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{4pt}
+  \setlength\partopsep{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% Informational "quote" style environment
+\newmdenv[
+    topline=false,
+    bottomline=false,
+    rightline=false,
+    skipabove=\topsep,
+    skipbelow=\topsep,
+    linecolor=gray
+]{informational}
+
+% These next few blocks define the formatting for the chapter and section
+% headings. Play around and modify things if you want, or leave them as is.
+% More details on this in the https://ctan.org/pkg/titlesec titlesec package
+% and overleaf's documentation https://www.overleaf.com/learn/latex/Sections_and_chapters#Customize_chapters_and_sections
+\titleformat{\chapter}[hang]
+{\scshape\LARGE} %Format
+{\thechapter} %Label
+{0.5em} %sec
+{\vspace{-10mm}} %before-code
+{} %after-code
+\titlespacing{\chapter}{0pt}{-2pt}{0pt}
+
+\titleformat{\section}[hang]
+{\bfseries\Large}
+{\thechapter}
+{0.5em}
+{}
+{}
+\titlespacing{\section}{0pt}{0pt}{0pt}
+
+\titleformat{\subsection}[hang]
+{\bfseries\large}
+{\thechapter}
+{0.5em}
+{}
+{}
+\titlespacing{\subsection}{0pt}{0pt}{0pt}
+
+\titleformat{\subsubsection}[hang]
+{\bfseries}
+{\thechapter}
+{0.5em}
+{}
+{}
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+
+\titleformat{\paragraph}[runin]
+{\bfseries}
+{\thechapter}
+{0.5em}
+{}
+{}
+\titlespacing{\paragraph}{0pt}{0pt}{4pt}
+
+% This turns off section numbering
+\setcounter{secnumdepth}{-2}
+% This sets the deepest section to include in the ToC.
+\settocdepth{subsection}
+
+\let\cleardoublepage\clearpage
+
+% This is the command for a full-page title picture
+\newcommand{\fullpagetitlepicture}[1]{
+\AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{#1}}
+\begin{titlingpage}
+\begin{center}
+\end{center}
+\end{titlingpage}
+}
+
+% This command reformats the toc to be (IMO) "nicer". I can't exactly remember how
+% or why this does what it does. But it does something. You can remove it and see
+% what it looks like without it.
+\makeatletter
+\renewcommand\tableofcontents{%
+ \@starttoc{toc}%
+}
+\makeatother
+
+% Copyrightpage environment, puts text at bottom of page, with optional
+% logo stamp.
+\newenvironment{copyrightpage}[1]
+{
+    \vspace*{\fill}
+    \thispagestyle{empty}
+    \begin{center}
+        \ifthenelse{\equal{#1}{}}{}{\includegraphics[width=20mm]{#1}}
+    \end{center}
+    
+    \vspace*{\fill}
+}
+{
+    \setcounter{page}{0}
+    \pagenumbering{gobble}
+    \clearpage
+}
+
+% nice 2 column table. No real reason to use this over nice2longtable, which
+% works over multiple pages.
+\newenvironment{nice2tabular}[3][1.4]
+{
+    \renewcommand{\arraystretch}{#1}
+    \begin{tabular}{>{\raggedleft\arraybackslash}p{#2\linewidth};{1pt/3pt}>{\arraybackslash}p{#3\linewidth}}
+}
+{
+    \end{tabular}
+}
+
+% nice multipage 2 column table. No real reason to use this over nice2longtable, which
+% works over multiple pages.
+\newenvironment{nice2longtable}[2]
+{
+    \renewcommand{\arraystretch}{1.4}
+    \begin{longtable}{>{\raggedleft\arraybackslash}p{#1\linewidth};{1pt/3pt}>{\arraybackslash}p{#2\linewidth}}
+}
+{
+    \end{longtable}
+}
+
+% Starts the appendix, with a full-page spacer just reading "Appendix", and then
+% sets the header title to "Appendix"
+\newcommand{\niceappendix}
+{
+    \clearpage
+    \appendix
+
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[LE,RO]{Appendix}
+    \fancyhead[RE,LO]{\leftmark}
+    \fancyfoot[CE,CO]{\thepage}
+
+    \fancypagestyle{chap-fancy}{%
+      \fancyhf{}
+      \fancyhead[LE,RO]{Appendix}
+      \fancyfoot[CE,CO]{\thepage}
+    }
+    \patchcmd{\chapter}{\thispagestyle{chapter}}{\thispagestyle{chap-fancy}}{}{}
+
+    \thispagestyle{empty}
+    \begin{vplace}
+    \begin{center}
+    \Huge\scshape Appendix    
+    \end{center}
+    \end{vplace}
+    \clearpage
+}
+
+% The mientables!
+\newenvironment{mientable}
+{
+    \begin{hyphenrules}{nohyphenation}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{.06\linewidth}|>{\raggedright\arraybackslash}p{.76\linewidth}|}
+    \hline
+    \rowcolor[HTML]{000000}
+    \multicolumn{2}{|c|}{{\color[HTML]{FFFFFF} Mien}}      \\ \hline
+}
+{
+    \end{tabular}
+    \end{hyphenrules}
+}
