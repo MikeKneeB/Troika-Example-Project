@@ -14,15 +14,16 @@ all the files in this GitHub repository as a zip file from
 can also clone the repository, using: `git clone https://github.com/MikeKneeB/Troika-Example-Project/`
 if you don't have `git` installed I suggest downloading the zip file.
 
-Once you have the ZIP file downloaded and have extracted the contents to a sensible location, you can
+After downloading and extracting the contents of the zip file to a sensible location, you can
 upload them all to your blank project in Overleaf. (You will need to delete the existing `main.tex`
-file if it exists in your blank project.)
-
-Once there, you can start looking through the project, adding you own content, and hacking the layout
-elements to pieces to make something you're happy with!
+file if it exists in your blank project.) Now you can start looking through the project, adding your
+own content, and hacking the layout elements to pieces to make something you're happy with!
 
 I've included comments in these files for how the different commands work, and how they can be
 changed.
+
+This example project is *not* a beginner's guide. For a full run-down of how to use LaTeX in general
+I recommend the [Overleaf](https://www.overleaf.com/learn) documentation.
 
 ## Attribution and License
 
