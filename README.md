@@ -9,7 +9,7 @@ I strongly recommend using [Overleaf](https://www.overleaf.com/) for your LaTeX 
 to use, and massively reduces the headache of manually configuring LaTeX.
 
 Once you have an account on Overleaf, and have created your first blank project, you can download
-all the files in this GitHub repository either as a zip file from
+all the files in this GitHub repository as a zip file from
 [this link](https://github.com/MikeKneeB/Troika-Example-Project/archive/refs/heads/main.zip). You
 can also clone the repository, using: `git clone https://github.com/MikeKneeB/Troika-Example-Project/`
 if you don't have `git` installed I suggest downloading the zip file.
