@@ -40,7 +40,7 @@ page if someone had usefully provided an environment for just that purpose):
 
 Again, this is optional, and you are under no obligation to include this message.
 
-## Released examples:
+## Released Examples
 
 My Troika! adventures so far have used these (or earlier incarnations of) `setup/predoc` and `main` files to
 get started.
