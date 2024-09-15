@@ -49,7 +49,7 @@
 \begin{document}
 
 % Use this command to set a cover image from a PNG
-\fullpagetitlepicture{wf_cover}
+\fullpagetitlepicture{example_title}
 
 % Alternatively you could use the titlingpage environment:
 % \begin{titlingpage}
@@ -79,7 +79,7 @@
 % Upload your own logo or any small image you like to include on the "inside
 % cover".
 % You can also omit the logo argument completely.
-\begin{copyrightpage}{gr_logo_alt}
+\begin{copyrightpage}{example_logo}
 
 Copyright 2024 Mike Knee \copyright
 
@@ -130,7 +130,9 @@ I like to mark references to spells and items from the core \bhref{https://www.t
 %    (and section is 2, subsection 3, etc.).
 %  - The name of the entry in the ToC.
 %  - The label for the page, which can then be used in links.
-\includepdf[pages=-,addtotoc={1,chapter,1,Map,map}]{worm_finger_2_outlines_labels.png}
+%
+% I use this to include maps, but it might be useful for other things you want as well.
+\includepdf[pages=-,addtotoc={1,chapter,1,Map,map}]{example_map.png}
 
 \chapter{Introduction}
 
